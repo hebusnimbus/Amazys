@@ -120,7 +120,7 @@ The easiest way to create them is to import their corresponding private keys in 
 ![MetaMask](https://github.com/hebusnimbus/Amazys/blob/master/images/Metamask_Accounts.png)
 
 Also make sure to select the default local RPC client in the configuration:
-![MetaMask](https://github.com/hebusnimbus/Amazys/blob/master/images/Metamask_Network.jpg)
+![MetaMask](https://github.com/hebusnimbus/Amazys/blob/master/images/Metamask_Network.png)
 
 We will use:
 - Account 1 as the administrator
@@ -132,14 +132,14 @@ Of course, feel free to create more of each!
 ### Administrator
 
 Make sure to select `Account 1` in your MetaMask.  You should now see a simple web page allowing you to add a store owner:
-![Add Owner](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Add_Owner.jpg)
+![Add Owner](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Add_Owner.png)
 
 Copy and paste `Account 2` value (`0xab638944e18b84e3e1180523687968a8c0b5001c` in this tutorial) and add a new store owner.  MetaMask will prompt you to confirm the transaction.
 
 If you try to add the same address more than once, the transaction and operation will fail as expected.
 
 Once the transaction is confirmed by MetaMask and the page has been reloaded, we should see hour first Store Owner:
-![Owner Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Owner_Added.jpg)
+![Owner Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Owner_Added.png)
 
 
 ### Store owner
@@ -149,7 +149,7 @@ At this point, we need to switch to the `Account 2` created in the previous sect
 Note how the application understands who the user is, and shows the appropriate web page !!
 
 Add a store, and notice how MetaMask asks for confirmation once again. Location, category and image are randomly generated, but it is easy to imagine how they could be filled in and/or uploaded by the store owner, and store in IPFS for example:
-![Store Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Store_Added.jpg)
+![Store Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Store_Added.png)
 
 Clicking on `Products` redirects the store owner to a web page where they can add/modify/delete products in each of their store.  The procedure is the same as above:
 - add a product
