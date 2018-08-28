@@ -6,6 +6,7 @@ import './Store.sol';
 /** @title Market Place implementation. */
 contract MarketPlace {
     // ----------  Structs  ----------
+
     struct Owner {
         address addr;
         string  name;
