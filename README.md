@@ -203,7 +203,7 @@ The whole marketplace application is organized around 4 contracts:
 Note that is is important to keep track of the price at the time of purchase, since prices can change overtime.
 
 
-Tests are available in the test directory, and should cover each contract functions. 
+Tests are available in the test directory, and should cover each contract functions (some of these contracts are very small, and so it was not possible to write at least 5 tests per). 
 ```
 $ truffle test
 
