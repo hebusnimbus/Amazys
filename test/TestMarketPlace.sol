@@ -36,24 +36,26 @@ contract TestMarketPlace {
     }
 
     function testAddStore() public {
-        uint256 numStores = marketPlace.getNumStores();
+        uint256 numStores = marketPlace.getNumStoresForOwner();
         Assert.equal(numStores, 0, "Number of stores should be 0.");
 
-        uint256 numAllStores = marketPlace.getNumAllStores();
+        uint256 numAllStores = marketPlace.getNumStores();
         Assert.equal(numAllStores, 0, "Number of all stores should be 0.");
-
-        string[] memory allStores = marketPlace.getAllStores();
-        Assert.equal(allStores.length, 0, "Number of all stores should be 0.");
 
         marketPlace.setTesting(true); // disables restrictions so tests can run
         marketPlace.addStore("name");
 
-        numAllStores = marketPlace.getNumAllStores();
+        // numStores = marketPlace.getNumStoresForOwner();
+        // Assert.equal(numStores, 1, "Number of stores should be 1.");
+
+        numAllStores = marketPlace.getNumStores();
         Assert.equal(numAllStores, 1, "Number of all stores should be 1.");
 
-        allStores = marketPlace.getAllStores();
-        Assert.equal(allStores.length, 1, "Number of all stores should be 1.");
-        Assert.equal(allStores[0], "name", "Name of the store should be 'name'.");
+        // string memory store = marketPlace.getStoreForOwner(0);
+        // Assert.equal(store, "name", "Name of the store should be 'name'.");
+
+        string memory store = marketPlace.getStore(0);
+        Assert.equal(store, "name", "Name of the store should be 'name'.");
     }
 
     function testAddProduct() public {
@@ -81,7 +83,7 @@ contract TestMarketPlace {
         marketPlace.addStore("name");
         marketPlace.addProduct("name", "productName", 1234, 100);
 
-        // uint256 numStores = marketPlace.getNumStores();
+        // uint256 numStores = marketPlace.getNumStoresForOwner();
         // Assert.equal(numStores, 1, "Number of stores should be 1.");
 
         uint256 numProducts = marketPlace.getNumProducts("name");

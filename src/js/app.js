@@ -92,7 +92,7 @@ App = {
   },
 
   async loadStoresView(marketPlace) {
-    const numStores = parseInt(await marketPlace.getNumStores(), 10);
+    const numStores = parseInt(await marketPlace.getNumStoresForOwner(), 10);
     console.log(`num stores: ${numStores}`);
 
     const storeView = $('#storeView');
@@ -111,7 +111,7 @@ App = {
     const images     = [ '865393164-1024x1024.jpg', '871227828-1024x1024.jpg', '881096270-1024x1024.jpg', '930645844-1024x1024.jpg' ];
 
     for (i = 0; i < numStores; i ++) {
-      const store = await marketPlace.getStore(i);
+      const store = await marketPlace.getStoreForOwner(i);
       storeTemplate.find('.panel-title').text(store);
       storeTemplate.find('.store-category').text(categories[App.getRandomInt(images.length)]);
       storeTemplate.find('.store-location').text(locations[App.getRandomInt(images.length)]);
@@ -123,26 +123,24 @@ App = {
   },
 
   async loadShoppersView(marketPlace) {
-    const numStores = parseInt(await marketPlace.getNumAllStores(), 10);
+    const numStores = parseInt(await marketPlace.getNumStores(), 10);
     console.log(`num all stores: ${numStores}`);
 
     const shopperView = $('#shopperView');
     const shopperTemplate = $('#shopperTemplate');
 
-    const stores = await marketPlace.getAllStores();
-    console.log(stores);
-
     const categories = [ 'Finance', 'Health', 'Retail' ];
     const locations  = [ 'Warren, MI', 'San Francisco, CA', 'New York, NY' ];
     const images     = [ '865393164-1024x1024.jpg', '871227828-1024x1024.jpg', '881096270-1024x1024.jpg', '930645844-1024x1024.jpg' ];
 
-    for (i = 0; i < stores.length; i ++) {
-      shopperTemplate.find('.panel-title').text(stores[i]);
+    for (i = 0; i < numStores; i ++) {
+      const store = await marketPlace.getStore(i);
+      shopperTemplate.find('.panel-title').text(store);
       shopperTemplate.find('.store-category').text(categories[App.getRandomInt(images.length)]);
       shopperTemplate.find('.store-location').text(locations[App.getRandomInt(images.length)]);
       shopperTemplate.find('.img-store').attr('src', 'images/stores/' + images[App.getRandomInt(images.length)]);
-      shopperTemplate.find('.btn-shop').attr('data-store-id', stores[i]);
-      shopperTemplate.find('.btn-shop').attr('data-store-name', stores[i]);
+      shopperTemplate.find('.btn-shop').attr('data-store-id', store);
+      shopperTemplate.find('.btn-shop').attr('data-store-name', store);
       shopperView.append(shopperTemplate.html());
     }
   },

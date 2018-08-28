@@ -118,7 +118,7 @@ contract MarketPlace {
     /** @dev Returns the number of stores for the current store owner (msg.sender).
       * @return the total number of stores for the current owner
       */
-    function getNumStores() public view returns (uint256) {
+    function getNumStoresForOwner() public view returns (uint256) {
         if (ownersByAddress[msg.sender].addr == address(0)) {
             return 0;
         }
@@ -130,27 +130,24 @@ contract MarketPlace {
       * @param storeId the id of the store
       * @return the name of the store
       */
-    function getStore(uint256 storeId) public view returns (string) {
+    function getStoreForOwner(uint256 storeId) public view returns (string) {
         require(ownersByAddress[msg.sender].addr != address(0));
         return ownersByAddress[msg.sender].stores[storeId].name();
     }
 
-    /** @dev Returns the total number of all stores available in the market place (all owners conbined).
+    /** @dev Returns the total number of all stores available in the market place (all owners combined).
       * @return the total number of stores
       */
-    function getNumAllStores() public view returns (uint256) {
+    function getNumStores() public view returns (uint256) {
         return stores.length;
     }
 
-    /** @dev Returns all the names of all the stores available in the market place (all owners conbined).
-      * @return the names of the stores
+    /** @dev Returns a specific store among all the stores available in the market place (all owners combined).
+      * @return the names of the store
       */
-    function getAllStores() public view returns (string[]) {
-        string[] memory allStores = new string[](stores.length);
-        for (uint i=0; i<stores.length; i++) {
-            allStores[i] = stores[i].name();
-        }
-        return allStores;
+    function getStore(uint256 storeId) public view returns (string) {
+        require(storeId < stores.length);
+        return stores[storeId].name();
     }
 
     // ----------  Products  ----------
