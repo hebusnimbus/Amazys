@@ -15,6 +15,8 @@ contract MarketPlace {
 
     // ----------  Variables  ----------
 
+    bool private stopped = false;
+
     mapping (address => uint8) administrators;
 
     Owner[]                    owners;
@@ -51,13 +53,21 @@ contract MarketPlace {
         return ownersByAddress[msg.sender].addr != address(0);
     }
 
+    function toggleContractActive() public onlyAdministrators {
+        stopped = !stopped;
+    }
+
+    modifier stopInEmergency { if (!stopped) _; }
+
+    modifier onlyInEmergency { if (stopped) _; }
+
     // ----------  Store owners  ----------
 
     /** @dev Adds a new store owner - only administrators can perform this task.
       * @param storeOwner the owner of the store.
       * @param name the name of the owner.
       */
-    function addStoreOwner(address storeOwner, string name) public onlyAdministrators {
+    function addStoreOwner(address storeOwner, string name) public stopInEmergency onlyAdministrators {
         require(ownersByAddress[storeOwner].addr == address(0));
 
         Owner memory owner = Owner(storeOwner, name, new Store[](0));
@@ -86,7 +96,7 @@ contract MarketPlace {
     /** @dev Adds a new store - only store owners can perform this task.
       * @param storeName the name of the store.
       */
-    function addStore (string storeName) public onlyStoreOwners {
+    function addStore (string storeName) public stopInEmergency onlyStoreOwners {
         address storeOwner = msg.sender;
 
         require(ownersByAddress[storeOwner].addr != address(0));
@@ -144,7 +154,7 @@ contract MarketPlace {
       * @param price the price of the product
       * @param quantity the quantity of the product
       */
-    function addProduct(string storeName, string productName, uint256 price, uint256 quantity) public onlyStoreOwners {
+    function addProduct(string storeName, string productName, uint256 price, uint256 quantity) public stopInEmergency onlyStoreOwners {
         require(storesByName[storeName] != address(0));
 
         storesByName[storeName].addProduct(productName, price, quantity);
@@ -177,7 +187,7 @@ contract MarketPlace {
       * @param productId the id of the product
       * @param quantity the quantity of products to purchase
       */
-    function buy(string storeName, uint256 productId, uint256 quantity) public {
+    function buy(string storeName, uint256 productId, uint256 quantity) public stopInEmergency {
         require(storesByName[storeName] != address(0));
 
         storesByName[storeName].sell(msg.sender, productId, quantity);

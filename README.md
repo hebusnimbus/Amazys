@@ -259,3 +259,14 @@ contract TestStore {
 
 }
 ```
+
+
+## Security
+
+Please check the following documentation:
+- [avoiding_common_attacks.md](avoiding_common_attacks.md)
+- [design_pattern_desicions.md](design_pattern_desicions.md)
+
+The circuit breaker pattern was also implemented, in case something goes wrong with the contract:
+- 
+- (all write operations are halted, read operations can continue) 
