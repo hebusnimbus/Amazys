@@ -204,3 +204,58 @@ Note that is is important to keep track of the price at the time of purchase, si
 
 
 Tests are available in the test directory, and should cover each contract functions. 
+```
+$ truffle test
+
+  TestProduct
+    √ testConstructor (92ms)
+    √ testSetPrice (170ms)
+
+  TestMarketPlace
+    √ testIsAdministrator (48ms)
+    √ testIsStoreOwner (50ms)
+    √ testAddStoreOwner (53ms)
+    √ testAddStore (81ms)
+    √ testAddProduct
+    √ testBuy
+
+  TestSale
+    √ testConstructor (165ms)
+    √ testGetTotal (62ms)
+
+  TestStore
+    √ testConstructor (66ms)
+    √ testAddProduct (193ms)
+    √ testSell (316ms)
+
+
+  13 passing (6s)
+```
+
+And finally, a small library was used in the tests, called Strings:
+```
+pragma solidity ^0.4.4;
+
+library Strings {
+
+    function toAsciiString(address x) internal pure returns (string) {
+    }
+    ...
+
+}
+```
+
+And the utilization of it:
+```
+pragma solidity ^0.4.17;
+
+import "./Strings.sol";
+
+contract TestStore {
+
+    using Strings for *;
+
+    ...
+
+}
+```
