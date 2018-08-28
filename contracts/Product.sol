@@ -1,5 +1,6 @@
 pragma solidity ^0.4.4;
 
+/** @title Product implementation. */
 contract Product {
     address        owner;
     string  public name;
@@ -15,6 +16,9 @@ contract Product {
         price = _price;
     }
 
+    /** @dev Sets the price of this product
+      * @param newPrice the new price of the product
+      */
     function setPrice (uint256 newPrice) public onlyOwner () {
         price = newPrice;
     }

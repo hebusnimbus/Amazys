@@ -1,6 +1,6 @@
 pragma solidity ^0.4.4;
 
-// TODO: add restriction like onlyOwner ?
+/** @title Sale implementation. */
 contract Sale {
     string  public storeName;
     uint256 public productId;
@@ -16,6 +16,9 @@ contract Sale {
         buyer     = _buyer;
     }
 
+    /** @dev Returns the total purchase price of the buy order (sale)
+      * @param the total cost of the transaction
+      */
     function getTotal() public view returns (uint256) {
         return quantity * priceUnit;
     }
