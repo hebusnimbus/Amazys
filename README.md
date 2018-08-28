@@ -117,10 +117,10 @@ Account 2: 0xd0f9e5200186d2ad93582857878cb338ee93aa5c (this will be different on
 ```
 
 The easiest way to create them is to import their corresponding private keys in Metamask.  At the end you would end up with something similar to:
-[MetaMask](images/Metamask_Accounts.jpg)
+![MetaMask](images/Metamask_Accounts.jpg)
 
 Also make sure to select the default local RPC client in the configuration:
-[MetaMask](images/Metamask_Network.jpg)
+![MetaMask](images/Metamask_Network.jpg)
 
 We will use:
 - Account 1 as the administrator
@@ -132,14 +132,14 @@ Of course, feel free to create more of each!
 ### Administrator
 
 Make sure to select `Account 1` in your MetaMask.  You should now see a simple web page allowing you to add a store owner:
-[Add Owner](images/Administrator_Add_Owner.jpg)
+![Add Owner](images/Administrator_Add_Owner.jpg)
 
 Copy and paste `Account 2` value (`0xab638944e18b84e3e1180523687968a8c0b5001c` in this tutorial) and add a new store owner.  MetaMask will prompt you to confirm the transaction.
 
 If you try to add the same address more than once, the transaction and operation will fail as expected.
 
 Once the transaction is confirmed by MetaMask and the page has been reloaded, we should see hour first Store Owner:
-[Owner Added](images/Administrator_Owner_Added.jpg)
+![Owner Added](images/Administrator_Owner_Added.jpg)
 
 
 ### Store owner
@@ -149,7 +149,7 @@ At this point, we need to switch to the `Account 2` created in the previous sect
 Note how the application understands who the user is, and shows the appropriate web page !!
 
 Add a store, and notice how MetaMask asks for confirmation once again. Location, category and image are randomly generated, but it is easy to imagine how they could be filled in and/or uploaded by the store owner, and store in IPFS for example:
-[Store Added](images/Administrator_Store_Added.jpg)
+![Store Added](images/Administrator_Store_Added.jpg)
 
 Clicking on `Products` redirects the store owner to a web page where they can add/modify/delete products in each of their store.  The procedure is the same as above:
 - add a product
@@ -157,7 +157,7 @@ Clicking on `Products` redirects the store owner to a web page where they can ad
 - details are randomly generated in this demo
 
 Here is an example:
-[Owner Products](StoreOwner_Products.png)
+![Owner Products](StoreOwner_Products.png)
 
 
 ### Shopper
@@ -167,16 +167,16 @@ Here, let's switch to the `Account 3` created earlier in MetaMask, and impersona
 Note how the application understands who the user is, and shows the appropriate web page !!
 
 The default web page lists all the available stores, and let's the shopper look at the products:
-[Stores](images/Shopper_Stores.png)
+![Stores](images/Shopper_Stores.png)
 
 The shopper can select a store they want to purchase from, and see the available products and quantities (note how the options presented are different then for the store owners):
-[Shopper Products](Shopper_Products.png)
+![Shopper Products](Shopper_Products.png)
 
 The shopper can then specify how much of a specific product they want to purchase:
-[Shopper Buy](Shopper_Buy.png)
+![Shopper Buy](Shopper_Buy.png)
 
-And how the total quantity of that same product decreases after the purchase has been made (in thise case `Mugs``):
-[Shopper Bought](Shopper_Bought.png)
+And how the total quantity of that same product decreases after the purchase has been made (in thise case `Mugs`):
+![Shopper Bought](Shopper_Bought.png)
 
 
 The store contract keeps track of how many products shoppers have bought, as well as their balances so total balances can be deduced from their account once they go to the store to pick up their items.
@@ -191,4 +191,3 @@ The whole marketplace application is organized around 4 contracts:
 - [Store.sol](contracts/Store.sol): secondary contract to keep track of a store (owner, products, balance, etc)
 
 Note that is is important to keep track of the price at the time of purchase, since prices can change overtime.
-
