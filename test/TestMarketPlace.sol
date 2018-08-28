@@ -81,6 +81,9 @@ contract TestMarketPlace {
         marketPlace.addStore("name");
         marketPlace.addProduct("name", "productName", 1234, 100);
 
+        // uint256 numStores = marketPlace.getNumStores();
+        // Assert.equal(numStores, 1, "Number of stores should be 1.");
+
         uint256 numProducts = marketPlace.getNumProducts("name");
         Assert.equal(numProducts, 1, "Number of products should be 1.");
 
