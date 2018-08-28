@@ -117,9 +117,11 @@ Account 2: 0xd0f9e5200186d2ad93582857878cb338ee93aa5c (this will be different on
 ```
 
 The easiest way to create them is to import their corresponding private keys in Metamask.  At the end you would end up with something similar to:
+
 ![MetaMask](https://github.com/hebusnimbus/Amazys/blob/master/images/Metamask_Accounts.png)
 
 Also make sure to select the default local RPC client in the configuration:
+
 ![MetaMask](https://github.com/hebusnimbus/Amazys/blob/master/images/Metamask_Network.png)
 
 We will use:
@@ -132,6 +134,7 @@ Of course, feel free to create more of each!
 ### Administrator
 
 Make sure to select `Account 1` in your MetaMask.  You should now see a simple web page allowing you to add a store owner:
+
 ![Add Owner](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Add_Owner.png)
 
 Copy and paste `Account 2` value (`0xab638944e18b84e3e1180523687968a8c0b5001c` in this tutorial) and add a new store owner.  MetaMask will prompt you to confirm the transaction.
@@ -139,6 +142,7 @@ Copy and paste `Account 2` value (`0xab638944e18b84e3e1180523687968a8c0b5001c` i
 If you try to add the same address more than once, the transaction and operation will fail as expected.
 
 Once the transaction is confirmed by MetaMask and the page has been reloaded, we should see hour first Store Owner:
+
 ![Owner Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Owner_Added.png)
 
 
@@ -149,6 +153,7 @@ At this point, we need to switch to the `Account 2` created in the previous sect
 Note how the application understands who the user is, and shows the appropriate web page !!
 
 Add a store, and notice how MetaMask asks for confirmation once again. Location, category and image are randomly generated, but it is easy to imagine how they could be filled in and/or uploaded by the store owner, and store in IPFS for example:
+
 ![Store Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Store_Added.png)
 
 Clicking on `Products` redirects the store owner to a web page where they can add/modify/delete products in each of their store.  The procedure is the same as above:
@@ -157,6 +162,7 @@ Clicking on `Products` redirects the store owner to a web page where they can ad
 - details are randomly generated in this demo
 
 Here is an example:
+
 ![Owner Products](https://github.com/hebusnimbus/Amazys/blob/master/images/StoreOwner_Products.png)
 
 
@@ -167,15 +173,19 @@ Here, let's switch to the `Account 3` created earlier in MetaMask, and impersona
 Note how the application understands who the user is, and shows the appropriate web page !!
 
 The default web page lists all the available stores, and let's the shopper look at the products:
+
 ![Stores](https://github.com/hebusnimbus/Amazys/blob/master/images/Shopper_Stores.png)
 
 The shopper can select a store they want to purchase from, and see the available products and quantities (note how the options presented are different then for the store owners):
+
 ![Shopper Products](https://github.com/hebusnimbus/Amazys/blob/master/images/Shopper_Products.png)
 
 The shopper can then specify how much of a specific product they want to purchase:
+
 ![Shopper Buy](https://github.com/hebusnimbus/Amazys/blob/master/images/Shopper_Buy.png)
 
 And how the total quantity of that same product decreases after the purchase has been made (in thise case `Mugs`):
+
 ![Shopper Bought](https://github.com/hebusnimbus/Amazys/blob/master/images/Shopper_Bought.png)
 
 
