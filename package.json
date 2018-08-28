@@ -1,7 +1,10 @@
 {
-  "name": "amazys",
+  "name": "Amazys",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=0.8"
+  },
   "main": "truffle.js",
   "directories": {
     "test": "test"

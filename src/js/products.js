@@ -43,6 +43,10 @@ App = {
     $(document).on('click', '.btn-buy', App.buyProduct);
   },
 
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  },
+
   async loadMainPage() {
     const marketPlace = await App.contracts.MarketPlace.deployed();
     const isAdministrator = await marketPlace.isAdministrator();
@@ -71,11 +75,14 @@ App = {
       );
     }
 
+    const images = [ 'background-mugs.jpg', 'cosmetic-oil-1533662273oZu.jpg', 'grated-cheese.jpg', 'essential-oil-1529590473ZTy.jpg' ];
+
     for (i = 0; i < numProducts; i ++) {
       const product = await marketPlace.getProduct(storeName, i);
       productTemplate.find('.panel-title').text(product[0]);
       productTemplate.find('.product-price').text(product[1]);
       productTemplate.find('.product-quantity').text(product[2]);
+      productTemplate.find('.img-product').attr('src', 'images/products/' + images[App.getRandomInt(images.length)]);
       productTemplate.find('.btn-buy').attr('data-id', i);
       productTemplate.find('.btn-modify').attr('data-id', i);
       productTemplate.find('.btn-delete').attr('data-id', i);

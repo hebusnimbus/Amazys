@@ -1,4 +1,4 @@
-var MarketPlace = artifacts.require("MarketPlace");
+var MarketPlace = artifacts.require("./MarketPlace");
 
 module.exports = function(deployer) {
   deployer.deploy(MarketPlace);

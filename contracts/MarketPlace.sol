@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.4;
 pragma experimental ABIEncoderV2;
 
 import './Store.sol';
@@ -36,7 +36,7 @@ contract MarketPlace {
         administrators[msg.sender] = 1;
     }
 
-    // ???
+    // Identity
     function isAdministrator() public view returns (bool) {
         return administrators[msg.sender] != address(0);
     }

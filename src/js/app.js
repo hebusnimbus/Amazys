@@ -39,23 +39,32 @@ App = {
     $(document).on('click', '.btn-addstore',   App.addStore);
   },
 
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  },
+
   async loadMainPage() {
-    const marketPlace = await App.contracts.MarketPlace.deployed();
-    const isAdministrator = await marketPlace.isAdministrator();
-    const isStoreOwner = await marketPlace.isStoreOwner();
-    console.log(isAdministrator);
-    console.log(isStoreOwner);
+    try {
+      const marketPlace = await App.contracts.MarketPlace.deployed();
+      console.log(marketPlace);
+      const isAdministrator = await marketPlace.isAdministrator();
+      const isStoreOwner = await marketPlace.isStoreOwner();
+      console.log(isAdministrator);
+      console.log(isStoreOwner);
 
-    // console.log(await marketPlace.addStoreOwner('0xcd03f6bfe72ead29afdc828a724bc82caac1a232', 'Joanes'));
+      // console.log(await marketPlace.addStoreOwner('0xcd03f6bfe72ead29afdc828a724bc82caac1a232', 'Joanes'));
 
-    if (isAdministrator) {
-      await App.loadOwnersView(marketPlace);
-    }
-    else if (isStoreOwner) {
-      await App.loadStoresView(marketPlace);
-    }
-    else {
-      await App.loadShoppersView(marketPlace);
+      if (isAdministrator) {
+        await App.loadOwnersView(marketPlace);
+      }
+      else if (isStoreOwner) {
+        await App.loadStoresView(marketPlace);
+      }
+      else {
+        await App.loadShoppersView(marketPlace);
+      }
+    } catch (e) {
+      console.log(e);
     }
   },
 
@@ -100,9 +109,16 @@ App = {
         + '</center>'
     );
 
+    const categories = [ 'Finance', 'Health', 'Retail' ];
+    const locations  = [ 'Warren, MI', 'San Francisco, CA', 'New York, NY' ];
+    const images     = [ '865393164-1024x1024.jpg', '871227828-1024x1024.jpg', '881096270-1024x1024.jpg', '930645844-1024x1024.jpg' ];
+
     for (i = 0; i < numStores; i ++) {
       const store = await marketPlace.getStore(i);
       storeTemplate.find('.panel-title').text(store);
+      storeTemplate.find('.store-category').text(categories[App.getRandomInt(images.length)]);
+      storeTemplate.find('.store-location').text(locations[App.getRandomInt(images.length)]);
+      storeTemplate.find('.img-store').attr('src', 'images/stores/' + images[App.getRandomInt(images.length)]);
       storeTemplate.find('.btn-products').attr('data-store-id', i);
       storeTemplate.find('.btn-products').attr('data-store-name', store);
       storeView.append(storeTemplate.html());
@@ -119,8 +135,15 @@ App = {
     const stores = await marketPlace.getAllStores();
     console.log(stores);
 
+    const categories = [ 'Finance', 'Health', 'Retail' ];
+    const locations  = [ 'Warren, MI', 'San Francisco, CA', 'New York, NY' ];
+    const images     = [ '865393164-1024x1024.jpg', '871227828-1024x1024.jpg', '881096270-1024x1024.jpg', '930645844-1024x1024.jpg' ];
+
     for (i = 0; i < stores.length; i ++) {
       shopperTemplate.find('.panel-title').text(stores[i]);
+      shopperTemplate.find('.store-category').text(categories[App.getRandomInt(images.length)]);
+      shopperTemplate.find('.store-location').text(locations[App.getRandomInt(images.length)]);
+      shopperTemplate.find('.img-store').attr('src', 'images/stores/' + images[App.getRandomInt(images.length)]);
       shopperTemplate.find('.btn-shop').attr('data-store-id', stores[i]);
       shopperTemplate.find('.btn-shop').attr('data-store-name', stores[i]);
       shopperView.append(shopperTemplate.html());
@@ -141,6 +164,15 @@ App = {
     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     const txn = await marketPlace.addStoreOwner(ownerAddress, ownerName);
     console.log(txn);
+
+    // web3.eth.getTransactionReceipt(txn)
+    //   .then(function (txnHash) {
+    //     console.log(txnhash);
+    //     return web3.eth.getTransactionReceipt(txnHash);
+    //   })
+    //   .then(function (receipt) {
+    //     console.log(receipt);
+    //   });
   },
 
   async addStore(event) {
