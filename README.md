@@ -268,5 +268,5 @@ Please check the following documentation:
 - [design_pattern_desicions.md](design_pattern_desicions.md)
 
 The circuit breaker pattern was also implemented, in case something goes wrong with the contract:
-- 
+- https://github.com/hebusnimbus/Amazys/blob/master/contracts/MarketPlace.sol#L56 
 - (all write operations are halted, read operations can continue) 
