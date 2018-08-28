@@ -201,3 +201,6 @@ The whole marketplace application is organized around 4 contracts:
 - [Store.sol](contracts/Store.sol): secondary contract to keep track of a store (owner, products, balance, etc)
 
 Note that is is important to keep track of the price at the time of purchase, since prices can change overtime.
+
+
+Tests are available in the test directory, and should cover each contract functions. 
