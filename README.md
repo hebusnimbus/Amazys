@@ -208,28 +208,28 @@ Tests are available in the test directory, and should cover each contract functi
 $ truffle test
 
   TestProduct
-    √ testConstructor (92ms)
-    √ testSetPrice (170ms)
+    √ testConstructor (190ms)
+    √ testSetPrice (172ms)
+    √ testDecreaseQuantity (146ms)
 
   TestMarketPlace
-    √ testIsAdministrator (48ms)
-    √ testIsStoreOwner (50ms)
-    √ testAddStoreOwner (53ms)
-    √ testAddStore (81ms)
-    √ testAddProduct
-    √ testBuy
+    √ testIsAdministrator (106ms)
+    √ testIsStoreOwner (52ms)
+    √ testAddStoreOwner (110ms)
+    √ testAddStore (146ms)
+    √ testAddProduct (213ms)
+    √ testBuy (325ms)
 
   TestSale
-    √ testConstructor (165ms)
-    √ testGetTotal (62ms)
+    √ testConstructor (176ms)
+    √ testGetTotal (57ms)
 
   TestStore
-    √ testConstructor (66ms)
-    √ testAddProduct (193ms)
-    √ testSell (316ms)
+    √ testConstructor (68ms)
+    √ testAddProduct (185ms)
+    √ testSell (322ms)
 
-
-  13 passing (6s)
+  14 passing (7s)
 ```
 
 And finally, a small library was used in the tests, called Strings:

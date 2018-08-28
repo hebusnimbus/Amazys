@@ -9,11 +9,11 @@ contract Store {
     string                       public name;
     uint256                             balance;
 
-    Product[]                           products;
-    mapping (uint256 => uint256)        productQuantities;
+    mapping (uint256 => Product)        productsIndex;
     uint256                             numProducts;
 
-    Sale[]                              sales;
+    mapping (uint256 => Sale)           salesIndex;
+    uint256                             numSales;
 
     modifier onlyOwner() {
         if (msg.sender == owner) _;
@@ -30,10 +30,7 @@ contract Store {
       * @param quantity the quantity for this product
       */
     function addProduct(string productName, uint256 price, uint256 quantity) public onlyOwner {
-        Product product = new Product(productName, price);
-
-        productQuantities[numProducts] = quantity;
-        products.push(product);
+        productsIndex[numProducts] = new Product(productName, price, quantity);
 
         ++numProducts;
     }
@@ -42,31 +39,37 @@ contract Store {
       * @return the number of products
       */
     function getNumProducts() public view returns (uint256) {
-        return products.length;
+        return numProducts;
     }
 
     /** @dev Returns a specific product for this store
-      * @param productId the id of the product
+      * @param productIndex the id of the product
       * @return returns the product name, product price & product quantity
       */
-    function getProduct(uint256 productId) public view returns (string, uint256, uint256) {
-        require(productId < products.length);
-        return (products[productId].name(), products[productId].price(), productQuantities[productId]);
+    function getProduct(uint256 productIndex) public view returns (string, uint256, uint256) {
+        require(productIndex < numProducts);
+
+        Product product = productsIndex[productIndex];
+
+        return (product.name(), product.price(), product.quantity());
     }
 
     /** @dev Executes a buy order for this store
       * @param buyer the address of the buyer
-      * @param productId the id of the product
+      * @param productIndex the id of the product
       * @param quantity the quantity of product to purchase
       */
-    function sell(address buyer, uint256 productId, uint256 quantity) public {
-        require(productId < numProducts);
-        require(productQuantities[productId] >= quantity);
+    function sell(address buyer, uint256 productIndex, uint256 quantity) public {
+        require(productIndex < numProducts);
 
-        productQuantities[productId] -= quantity;
+        Product product = productsIndex[productIndex];
 
-        Sale sale = new Sale(name, productId, quantity, products[productId].price(), buyer);
-        sales.push(sale);
+        require(product.quantity() >= quantity);
+
+        product.decreaseQuantity(quantity);
+
+        Sale sale = new Sale(name, productIndex, quantity, product.price(), buyer);
+        salesIndex[numSales++] = sale;
 
         balance += sale.getTotal();
     }
@@ -82,18 +85,18 @@ contract Store {
       * @return the number of sales
       */
     function getNumSales() public onlyOwner view returns (uint256) {
-        return sales.length;
+        return numSales;
     }
 
     /** @dev Returns a specific sale for this store
-      * @param saleId the id of the sale
+      * @param saleIndex the index of the sale
       * @return the store name, product id, quantity, unit price and buyer address
       */
-    function getSale(uint256 saleId) public onlyOwner view returns (string, uint256, uint256, uint256, address) {
-        require(saleId < sales.length);
+    function getSale(uint256 saleIndex) public onlyOwner view returns (string, uint256, uint256, uint256, address) {
+        require(saleIndex < numSales);
 
-        Sale sale = sales[saleId];
+        Sale sale = salesIndex[saleIndex];
 
-        return (sale.storeName(), sale.productId(), sale.quantity(), sale.priceUnit(), sale.buyer());
+        return (sale.storeName(), sale.productIndex(), sale.quantity(), sale.priceUnit(), sale.buyer());
     }
 }

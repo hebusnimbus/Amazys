@@ -1,5 +1,4 @@
 pragma solidity ^0.4.4;
-pragma experimental ABIEncoderV2;
 
 import './Store.sol';
 
@@ -22,11 +21,13 @@ contract MarketPlace {
 
     mapping (address => uint8) administrators;
 
-    Owner[]                    owners;
     mapping (address => Owner) ownersByAddress;
+    mapping (uint256 => Owner) ownersIndex;
+    uint256                    numOwners;
 
-    Store[]                    stores;
-    mapping (string => Store)  storesByName;
+    mapping (string  => Store) storesByName;
+    mapping (uint256 => Store) storesIndex;
+    uint256                    numStores;
 
     // ----------  Modifiers  ----------
 
@@ -39,6 +40,10 @@ contract MarketPlace {
         require(testing || ownersByAddress[msg.sender].addr != address(0));
         _;
     }
+
+    modifier stopInEmergency { if (!stopped) _; }
+
+    modifier onlyInEmergency { if (stopped) _; }
 
     // ----------  Constructor  ----------
 
@@ -64,10 +69,6 @@ contract MarketPlace {
         testing = _testing;
     }
 
-    modifier stopInEmergency { if (!stopped) _; }
-
-    modifier onlyInEmergency { if (stopped) _; }
-
     // ----------  Store owners  ----------
 
     /** @dev Adds a new store owner - only administrators can perform this task.
@@ -79,23 +80,26 @@ contract MarketPlace {
 
         Owner memory owner = Owner(storeOwner, name, new Store[](0));
         ownersByAddress[storeOwner] = owner;
-        owners.push(owner);
+        ownersIndex[numOwners++] = owner;
     }
 
     /** @dev Returns the total number of store owners.
       * @return the total number of store owners
       */
     function getNumStoreOwners() public view returns (uint256) {
-        return owners.length;
+        return numOwners;
     }
 
     /** @dev Returns a specific store owner.
-      * @param storeOwnerId the id of the store owner
+      * @param storeOwnerIndex the id of the store owner
       * @return the address and name of the store owner
       */
-    function getStoreOwner(uint256 storeOwnerId) public view returns (address, string) {
-        require(storeOwnerId < owners.length);
-        return (owners[storeOwnerId].addr, owners[storeOwnerId].name);
+    function getStoreOwner(uint256 storeOwnerIndex) public view returns (address, string) {
+        require(storeOwnerIndex < numOwners);
+
+        Owner memory owner = ownersIndex[storeOwnerIndex];
+
+        return (owner.addr, owner.name);
     }
 
     // ----------  Stores  ----------
@@ -111,7 +115,7 @@ contract MarketPlace {
 
         Store store = new Store(storeName);
         ownersByAddress[storeOwner].stores.push(store);
-        stores.push(store);
+        storesIndex[numStores++] = store;
         storesByName[storeName] = store;
     }
 
@@ -127,27 +131,27 @@ contract MarketPlace {
     }
 
     /** @dev Returns a specific store belonging to the current store owner (msg.sender).
-      * @param storeId the id of the store
+      * @param storeIndex the id of the store
       * @return the name of the store
       */
-    function getStoreForOwner(uint256 storeId) public view returns (string) {
+    function getStoreForOwner(uint256 storeIndex) public view returns (string) {
         require(ownersByAddress[msg.sender].addr != address(0));
-        return ownersByAddress[msg.sender].stores[storeId].name();
+        return ownersByAddress[msg.sender].stores[storeIndex].name();
     }
 
     /** @dev Returns the total number of all stores available in the market place (all owners combined).
       * @return the total number of stores
       */
     function getNumStores() public view returns (uint256) {
-        return stores.length;
+        return numStores;
     }
 
     /** @dev Returns a specific store among all the stores available in the market place (all owners combined).
       * @return the names of the store
       */
-    function getStore(uint256 storeId) public view returns (string) {
-        require(storeId < stores.length);
-        return stores[storeId].name();
+    function getStore(uint256 storeIndex) public view returns (string) {
+        require(storeIndex < numStores);
+        return storesIndex[storeIndex].name();
     }
 
     // ----------  Products  ----------
@@ -175,25 +179,25 @@ contract MarketPlace {
 
     /** @dev Returns a specific product in a store.
       * @param storeName the name of the store
-      * @param productId the id of the product
+      * @param productIndex the id of the product
       * @return the name of the store, price and quantity of the product
       */
-    function getProduct(string storeName, uint256 productId) public view returns (string, uint256, uint256) {
+    function getProduct(string storeName, uint256 productIndex) public view returns (string, uint256, uint256) {
         require(storesByName[storeName] != address(0));
 
-        return storesByName[storeName].getProduct(productId);
+        return storesByName[storeName].getProduct(productIndex);
     }
 
     // ----------  Sales  ----------
 
     /** @dev Executes a buy order of a specific product.
       * @param storeName the name of the store
-      * @param productId the id of the product
+      * @param productIndex the id of the product
       * @param quantity the quantity of products to purchase
       */
-    function buy(string storeName, uint256 productId, uint256 quantity) public stopInEmergency {
+    function buy(string storeName, uint256 productIndex, uint256 quantity) public stopInEmergency {
         require(storesByName[storeName] != address(0));
 
-        storesByName[storeName].sell(msg.sender, productId, quantity);
+        storesByName[storeName].sell(msg.sender, productIndex, quantity);
     }
 }

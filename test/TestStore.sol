@@ -79,11 +79,11 @@ contract TestStore {
         uint256 numSales = store.getNumSales();
         Assert.equal(numSales, 1, "Number of sales should be '1'.");
 
-        string memory storeName; uint256 productId; uint256 priceUnit; address buyer;
-        (storeName, productId, quantity, priceUnit, buyer) = store.getSale(0);
+        string memory storeName; uint256 productIndex; uint256 priceUnit; address buyer;
+        (storeName, productIndex, quantity, priceUnit, buyer) = store.getSale(0);
 
         Assert.equal(storeName, "name", "Store name should be 'name'.");
-        Assert.equal(productId, 0, "Sale Product id should be '0'.");
+        Assert.equal(productIndex, 0, "Sale Product index should be '0'.");
         Assert.equal(quantity, 10, "Sale quantity should be '90'.");
         Assert.equal(priceUnit, 1234, "Sale price unit should be '1234'.");
         Assert.equal(buyer, 0x1234567890, "Buyer should be '0x1234567890'.");
