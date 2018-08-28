@@ -16,7 +16,7 @@ App = {
     }
     web3 = new Web3(App.web3Provider);
 
-    var queryDictionary = {};
+    const queryDictionary = {};
     location.search.substr(1).split("&").forEach(function(item) {queryDictionary[item.split("=")[0]] = item.split("=")[1]});
     App.queryParameters = queryDictionary;
 
@@ -49,20 +49,19 @@ App = {
 
   async loadMainPage() {
     const marketPlace = await App.contracts.MarketPlace.deployed();
-    const isAdministrator = await marketPlace.isAdministrator();
     const isStoreOwner = await marketPlace.isStoreOwner();
-    console.log(isAdministrator);
-    console.log(isStoreOwner);
+
+    const idAccount = $('#id-account');
+    idAccount[0].textContent = `(${web3.eth.accounts[0]})`;
 
     const storeName = decodeURIComponent(App.queryParameters.storeName.replace(/\+/g, '%20'));
-    console.log(storeName);
 
     const numProducts = parseInt(await marketPlace.getNumProducts(storeName), 10);
     console.log(`num products: ${numProducts}`);
 
-    var productView = $('#productView');
-    var productViewTop = $('#productViewTop');
-    var productTemplate = $('#productTemplate');
+    const productView = $('#productView');
+    const productViewTop = $('#productViewTop');
+    const productTemplate = $('#productTemplate');
 
     if (isStoreOwner) {
       productViewTop.append(
@@ -115,7 +114,7 @@ App = {
     const productId = event.target.attributes['data-id'].value;
     const storeName = decodeURIComponent(App.queryParameters.storeName.replace(/\+/g, '%20'));
 
-    var quantity = prompt("Quantity", "1");
+    const quantity = prompt("Quantity", "1");
     if (quantity !== null && quantity !== "") {
       const marketPlace = await App.contracts.MarketPlace.deployed();
       const txn = await marketPlace.buy(storeName, productId, quantity);

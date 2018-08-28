@@ -46,13 +46,11 @@ App = {
   async loadMainPage() {
     try {
       const marketPlace = await App.contracts.MarketPlace.deployed();
-      console.log(marketPlace);
       const isAdministrator = await marketPlace.isAdministrator();
       const isStoreOwner = await marketPlace.isStoreOwner();
-      console.log(isAdministrator);
-      console.log(isStoreOwner);
 
-      // console.log(await marketPlace.addStoreOwner('0xcd03f6bfe72ead29afdc828a724bc82caac1a232', 'Joanes'));
+      const idAccount = $('#id-account');
+      idAccount[0].textContent = `(${web3.eth.accounts[0]})`;
 
       if (isAdministrator) {
         await App.loadOwnersView(marketPlace);
@@ -72,9 +70,9 @@ App = {
     const numStoreOwners = parseInt(await marketPlace.getNumStoreOwners(), 10);
     console.log(`num store owners: ${numStoreOwners}`);
 
-    var ownerView = $('#ownerView');
-    var ownerViewTop = $('#ownerViewTop');
-    var ownerTemplate = $('#ownerTemplate');
+    const ownerView = $('#ownerView');
+    const ownerViewTop = $('#ownerViewTop');
+    const ownerTemplate = $('#ownerTemplate');
 
     ownerViewTop.append(
         '<center>'
@@ -94,13 +92,12 @@ App = {
   },
 
   async loadStoresView(marketPlace) {
-    const isStoreOwner = await marketPlace.isStoreOwner();
     const numStores = parseInt(await marketPlace.getNumStores(), 10);
     console.log(`num stores: ${numStores}`);
 
-    var storeView = $('#storeView');
-    var storeViewTop = $('#storeViewTop');
-    var storeTemplate = $('#storeTemplate');
+    const storeView = $('#storeView');
+    const storeViewTop = $('#storeViewTop');
+    const storeTemplate = $('#storeTemplate');
 
     storeViewTop.append(
         '<center>'
@@ -129,8 +126,8 @@ App = {
     const numStores = parseInt(await marketPlace.getNumAllStores(), 10);
     console.log(`num all stores: ${numStores}`);
 
-    var shopperView = $('#shopperView');
-    var shopperTemplate = $('#shopperTemplate');
+    const shopperView = $('#shopperView');
+    const shopperTemplate = $('#shopperTemplate');
 
     const stores = await marketPlace.getAllStores();
     console.log(stores);
@@ -152,16 +149,12 @@ App = {
 
   async addOwner(event) {
     event.preventDefault();
-    console.log(event.target);
 
     // var ownerView = $('#ownerView');
     const ownerAddress = document.getElementById('id-owneraddress').value;
     const ownerName = document.getElementById('id-ownername').value;
-    console.log(ownerAddress);
 
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     const marketPlace = await App.contracts.MarketPlace.deployed();
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     const txn = await marketPlace.addStoreOwner(ownerAddress, ownerName);
     console.log(txn);
 
@@ -177,14 +170,10 @@ App = {
 
   async addStore(event) {
     event.preventDefault();
-    console.log(event.target);
 
     const storeName = document.getElementById('id-storename').value;
-    console.log(storeName);
 
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
     const marketPlace = await App.contracts.MarketPlace.deployed();
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
     const txn = await marketPlace.addStore(storeName);
     console.log(txn);
   },
