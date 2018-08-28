@@ -154,7 +154,7 @@ Note how the application understands who the user is, and shows the appropriate 
 
 Add a store, and notice how MetaMask asks for confirmation once again. Location, category and image are randomly generated, but it is easy to imagine how they could be filled in and/or uploaded by the store owner, and store in IPFS for example:
 
-![Store Added](https://github.com/hebusnimbus/Amazys/blob/master/images/Administrator_Store_Added.png)
+![Store Added](https://github.com/hebusnimbus/Amazys/blob/master/images/StoreOwner_Store_Added.png)
 
 Clicking on `Products` redirects the store owner to a web page where they can add/modify/delete products in each of their store.  The procedure is the same as above:
 - add a product
