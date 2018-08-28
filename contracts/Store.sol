@@ -86,7 +86,7 @@ contract Store {
     }
 
     /** @dev Returns a specific sale for this store
-      * @param the id of the sale
+      * @param saleId the id of the sale
       * @return the store name, product id, quantity, unit price and buyer address
       */
     function getSale(uint256 saleId) public onlyOwner view returns (string, uint256, uint256, uint256, address) {

@@ -17,7 +17,7 @@ contract Sale {
     }
 
     /** @dev Returns the total purchase price of the buy order (sale)
-      * @param the total cost of the transaction
+      * @return the total cost of the transaction
       */
     function getTotal() public view returns (uint256) {
         return quantity * priceUnit;
