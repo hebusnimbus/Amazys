@@ -35,8 +35,8 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-addowner',   App.addOwner);
-    $(document).on('click', '.btn-addstore',   App.addStore);
+    $(document).on('click', '.btn-addowner', App.addOwner);
+    $(document).on('click', '.btn-addstore', App.addStore);
   },
 
   getRandomInt(max) {
