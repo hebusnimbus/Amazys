@@ -105,6 +105,28 @@ $ npm run dev
 
 The last command will automatically start and shift the focus to http://localhost:3000 in your default web browser, which is where most of the interactions will take place.
 
+IMPORTANT: If any of the commands above failed with a gas or gas limit error, you will need to change the default gas limit in your `truffle.js` file.
+
+To find out what the value should be:
+```
+$ truffle console
+truffle(development)> web3.eth.getBlock("pending").gasLimit
+6721975
+```
+Then change your file `truffle.js` as follow:
+```
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*", // Match any network id
+      gas: 6721975
+    }
+  }
+};
+```
+
 When first started, the application assumes the the person who first deployed the contracts is an administrator, in our example it would be:
 ```
 Account 1: 0x26523dfd4679294a87161a2cf74684aba8d52eb4 (this will be different on your local computer)
